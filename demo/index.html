@@ -1,0 +1,264 @@
+<!-- https://baidu.github.io/amis/zh-CN/docs/start/getting-started -->
+<!-- https://cdn.jsdelivr.net/gh/clin003/cdn/amis/demo/index.html -->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>白菜林 demo</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/clin003/cdn/amis/sdk.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/clin003/cdn/amis/helper.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/clin003/cdn/amis/iconfont.css" />
+  <!-- 这是默认主题所需的，如果是其他主题则不需要 -->
+  <!-- 从 1.1.0 开始 sdk.css 将不支持 IE 11，如果要支持 IE11 请引用这个 css，并把前面那个删了 -->
+  <!-- <link rel="stylesheet" href="sdk-ie11.css" /> -->
+  <!-- 不过 amis 开发团队几乎没测试过 IE 11 下的效果，所以可能有细节功能用不了，如果发现请报 issue -->
+  <style>
+    html,
+    body,
+    .app-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root" class="app-wrapper"></div>
+  <script src="https://cdn.jsdelivr.net/gh/clin003/cdn/amis/sdk.js"></script>
+  <script type="text/javascript">
+    (function () {
+      let amis = amisRequire('amis/embed');
+      // 通过替换下面这个配置来生成不同页面
+      let amisJSON = {
+        type: "page",
+        // debug: true,      
+        data: {
+          // 数据接口主域名地址，一般与myAdmin 授权主域名为同一地址，可与之不同
+          domain: "https://auth.nav.xin",
+          // 登录注册主域名地址
+          domain_login: "http://demo.3ae.cn",
+          // 白菜林myAdmin 授权主域名地址
+          domain_auth: "https://auth.nav.xin",
+          oauth_hash: '${oauth_hash}',
+          nickname: '${nickname}',
+          avatar: '${avatar}',
+          // 默认图片地址
+          default_img: "",
+          // 默认顶部标题
+          default_title: "默认标题",
+          // 初始化用户id，不要修改
+          userid: 0,
+          // 默认初始化 中间页id
+          itemid: "${iid|default:18}",
+        },  // page data
+        title: "${default_title}",
+        initApi: {
+          method: "post",
+          url: "${domain|raw}/login_with_oauth_hash",
+          data: {
+            oauth_hash: '${oauth_hash}',
+          },
+          dataType: "json",
+          "trackExpression": "${oauth_hash}",
+          adaptor: function (payload, response) {
+            if (payload.status === 0) {
+              const bearer = `Bearer ${payload.data}`
+              localStorage.setItem("Authorizations", bearer)
+            } else {
+              const bearer = `Bearer ${payload.msg}`
+              localStorage.setItem("Err:loginErr", bearer)
+              payload.status = 0
+              payload.msg = ""
+            }
+            return {
+              ...payload,
+            };
+          }
+        },  //initApi 
+        // 顶部状态栏
+        toolbar: {
+          type: 'service',
+          api: {
+            method: 'get',
+            url: '${domain|raw}/v1/user/info',
+            headers: {
+              "Authorization": "${ls:Authorizations}"
+            },
+            adaptor: function (payload, response) {
+              if (payload.status === 0) {
+                userid = payload.data.id
+                localStorage.setItem("userid", userid)
+              } else {
+                const bearer = `msg ${payload.msg}`
+                localStorage.setItem("Err:user/info", bearer)
+                payload.status = 0
+                payload.msg = ""
+              }
+              return {
+                ...payload,
+              };
+            }
+          },
+          body: [
+            {
+              type: 'avatar',
+              src: '${avatar}',
+              text: '${nickname}',
+              visibleOn: 'this.userid !== 0',
+            },
+            {
+              // icon: 'fa fa-qq',
+              label: 'QQ登录',
+              type: 'action',
+              actionType: 'url',
+              level: 'light',
+              blank: true,
+              url: '${domain_auth|raw}/oauth/qq?state=${window:document[URL]}',
+              visibleOn: 'this.userid === 0',
+            },
+            {
+              label: '登录/注册',
+              type: 'action',
+              actionType: 'url',
+              level: 'light',
+              blank: true,
+              url: '${domain_login|raw}/login',
+              visibleOn: 'this.userid === 0',
+            },
+          ],  //toolbar body
+        },  //toolbar
+
+        // 中间Body内容
+        body: {
+          type: "service",
+          api: {
+            method: 'get',
+            url: "${domain|raw}/fuli/safe/item/${itemid}",
+          },
+          "body": [
+            // {
+            //   "type": "tpl",
+            //   "tpl": "${goods_title}",
+            //   "inline": false
+            // },
+            {
+              "type": "panel",
+              "title": "${goods_title}",//商品标题
+              "body": [
+                // {
+                //   type: "page",
+                //   body: "当前页面标题为：<span class='label label-info'>${window:document[URL]}</span>"
+                // },
+
+                {
+                  type: "image",
+                  imageMode: "original",
+                  defaultImage: "${default_img}",
+                  // "imageCaption": "${desc}",
+                  // "title": "${goods_title}",
+                  enlargeAble: true,
+                  showDimensions: true,
+                  thumbMode: 'cover',
+                  "thumbMode": "h-full",
+                  name: '${goods_pic|raw}',
+                  "originalSrc": "${goods_pic|raw}",
+                  "src": "${goods_pic|raw}"
+                },  //展示 商品图片
+                {
+                  "type": "tpl",
+                  "tpl": "福利价格：${goods_price} 元",
+                  "inline": false
+                },
+                {
+                  "type": "tpl",
+                  "tpl": "福利数量：${total_num} 份   需邀请：${max_member} 人",
+                  "inline": false,
+                  visibleOn: 'this.is_show_number && this.is_original',
+                },  //展示 剩余福利数量
+                {
+                  "type": "tpl",
+                  "tpl": "${no_member_desc}",
+                  "inline": false,
+                  visibleOn: '!this.is_original',
+                },
+                {
+                  "type": "tpl",
+                  "tpl": "${desc|raw}",
+                  "inline": false
+                },  //展示 自定义提示文字
+
+              ],  //panel body
+
+              // 底部按钮
+              affixFooter: true,
+              actions: [
+                {
+                  type: "button",
+                  level: "danger",
+                  label: '立即领取',
+                  confirmText: '本次操作需要扣除 ${max_member} 个邀请数量！确认吗？',
+                  // confirmText: ' ${tips_desc | default:"本次操作需要扣除 ${max_member} 个邀请数量！确认吗？"}',
+                  actionType: "dialog",
+                  dialog: {
+                    title: '领取福利',
+                    // actions: [],
+                    body: {
+                      type: "page",
+                      initApi: {
+                        method: "get",
+                        url: '${domain|raw}/fuli/safe/taolijin/item/${itemid}',
+                        headers: {
+                          "Authorization": "${ls:Authorizations}"
+                        },
+                      },
+                      body: [
+                        {
+                          type: 'tpl',
+                          tpl: '获取失败(请重试，或换个宝贝)',
+                          visibleOn: 'this.total_num<=0',
+                        },
+                        {
+                          label: '一键复制口令',
+                          type: 'button',
+                          actionType: 'copy',
+                          copyFormat: 'text/html',
+                          content: '${taokouling}',
+                          visibleOn: 'this.total_num>0',
+                        },
+                        {
+                          label: '点击前往福利地址',
+                          type: 'action',
+                          actionType: 'url',
+                          level: 'link',
+                          blank: true,
+                          url: '${click_url|raw}',
+                        },
+                      ],//dialog body body
+                    },//dialog body
+                  },//dialog
+                },//底部按钮
+
+              ],//actions
+            }
+          ],//service body
+        },//root body
+        messages: {
+          fetchSuccess: "加载完成",
+          fetchFailed: "加载失败，请重试！",
+        },  //service messages 消息提示覆写
+
+
+      };
+      let amisScoped = amis.embed('#root', amisJSON);
+    })();
+  </script>
+</body>
+
+</html>
