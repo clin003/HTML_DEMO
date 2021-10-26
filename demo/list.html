@@ -94,8 +94,10 @@
             adaptor: function (payload, response) {
               if (payload.status === 0) {
                 userid = payload.data.id
+                payload.data.userid=payload.data.id
                 localStorage.setItem("userid", userid)
               } else {
+                payload.data.userid=0
                 const bearer = `msg ${payload.msg}`
                 localStorage.setItem("Err:user/info", bearer)
                 payload.status = 0
