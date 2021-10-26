@@ -74,8 +74,8 @@
             } else {
               const bearer = `Bearer ${payload.msg}`
               localStorage.setItem("Err:loginErr", bearer)
-              payload.status = 0
-              payload.msg = ""
+              // payload.status = 0
+              // payload.msg = ""
             }
             return {
               ...payload,
@@ -111,7 +111,7 @@
               type: 'avatar',
               src: '${avatar}',
               text: '${nickname}',
-              visibleOn: 'this.userid !== 0',
+              visibleOn: 'this.userid > 0',
             },
             {
               // icon: 'fa fa-qq',

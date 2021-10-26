@@ -98,8 +98,8 @@
               } else {
                 const bearer = `msg ${payload.msg}`
                 localStorage.setItem("Err:user/info", bearer)
-                payload.status = 0
-                payload.msg = ""
+                // payload.status = 0
+                // payload.msg = ""
               }
               return {
                 ...payload,
@@ -121,7 +121,7 @@
               level: 'light',
               blank: true,
               url: '${domain_auth|raw}/oauth/qq?state=${window:document[URL]}',
-              visibleOn: 'this.userid === 0',
+              visibleOn: 'this.userid > 0',
             },
             {
               label: '登录/注册',
