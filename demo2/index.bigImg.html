@@ -5,7 +5,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>白菜林 demo</title>
+  <title>白菜林 Demo</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -38,7 +38,24 @@
       // 通过替换下面这个配置来生成不同页面
       let amisJSON = {
         type: "page",
-        // debug: true,      
+        // debug: true,   
+        cssVars: {
+          "--body-bg": "#CD3632",
+          "--borderColor":"#CD3632",//边框颜色
+          "--background":"#CD3632",//table 等背景色
+          "--primary": "#CD3632",//主颜色，会影响主按钮颜色             
+        },
+        "css": {
+          ".myClass": {
+            "color": "blue"
+          },
+          ".bgRed": {
+            "background-color": "red",
+            "background": "red",
+            "opacity": "90.9%",
+          },
+          // ".body": { "background-color": "red", "background": "red", "opacity": "0.3",},
+        },       
         data: {
           // 数据接口主域名地址，一般与myAdmin 授权主域名为同一地址，可与之不同
           domain: "https://auth.nav.xin",
@@ -52,12 +69,12 @@
           // 默认图片地址
           default_img: "",
           // 默认顶部标题
-          default_title: "默认标题",
+          default_title: "白菜林 Demo",
           // 初始化用户id，不要修改
           // userid: '${userid}',
           userid: 0,
           // 默认初始化 中间页id
-          itemid: "${iid|default:18}",
+          itemid: "${iid|default:1}",
         },  // page data
         title: "${default_title}",
         initApi: {
@@ -95,14 +112,14 @@
             adaptor: function (payload, response) {
               if (payload.status === 0) {
                 userid = payload.data.id
-                payload.data.userid=payload.data.id
+                payload.data.userid = payload.data.id
                 localStorage.setItem("userid", userid)
               } else {
                 const bearer = `msg ${payload.msg}`
                 localStorage.setItem("Err:user/info", bearer)
-                payload.data.userid=0
-                // payload.status = 0
-                // payload.msg = ""
+                payload.data.userid = 0
+                payload.status = 0
+                payload.msg = ""
               }
               return {
                 ...payload,
@@ -126,24 +143,34 @@
               url: '${domain_auth|raw}/oauth/qq?state=${window:document[URL]}',
               visibleOn: 'this.userid === 0',
             },
-            {
-              label: '登录/注册',
-              type: 'action',
-              actionType: 'url',
-              level: 'light',
-              blank: true,
-              url: '${domain_login|raw}/login',
-              visibleOn: 'this.userid === 0',
-            },
+            // {
+            //   label: '登录/注册',
+            //   type: 'action',
+            //   actionType: 'url',
+            //   level: 'light',
+            //   blank: true,
+            //   url: '${domain_login|raw}/login',
+            //   visibleOn: 'this.userid === 0',
+            // },
           ],  //toolbar body
         },  //toolbar
 
         // 中间Body内容
-        body: {
+        body: {          
+          // "panelClassName": "bg-red-100 border-solid border-2 border-blue-500 rounded-xl shadow-lg",
           type: "service",
           api: {
             method: 'get',
             url: "${domain|raw}/fuli/safe/item/${itemid}",
+            adaptor: function (payload, response) {
+              if (payload.status === 20003) {
+                payload.status = 0
+                payload.msg = "没有数据了"
+              }
+              return {
+                ...payload,
+              };
+            }
           },
           "body": [
             // {
@@ -155,12 +182,7 @@
               "type": "panel",
               "title": "${goods_title}",//商品标题
               "body": [
-                // {
-                //   type: "page",
-                //   body: "当前页面标题为：<span class='label label-info'>${window:document[URL]}</span>"
-                // },
-
-                {
+                {                 
                   type: "image",
                   imageMode: "original",
                   defaultImage: "${default_img}",
@@ -177,7 +199,7 @@
                 {
                   "type": "tpl",
                   "tpl": "福利价格：${goods_price} 元",
-                  "inline": false
+                  "inline": true
                 },
                 {
                   "type": "tpl",
@@ -206,6 +228,7 @@
                   type: "button",
                   level: "danger",
                   label: '立即领取',
+                  block: true,
                   confirmText: '本次操作需要扣除 ${max_member} 个邀请数量！确认吗？',
                   // confirmText: ' ${tips_desc | default:"本次操作需要扣除 ${max_member} 个邀请数量！确认吗？"}',
                   actionType: "dialog",
@@ -220,11 +243,20 @@
                         headers: {
                           "Authorization": "${ls:Authorizations}"
                         },
+                        adaptor: function (payload, response) {
+                          if (payload.status === 20001) {
+                            // payload.status = 0
+                            payload.msg = "领取失败，需要邀请好友进群,才可以领取福利"
+                          }
+                          return {
+                            ...payload,
+                          };
+                        }
                       },
                       body: [
                         {
                           type: 'tpl',
-                          tpl: '获取失败(请重试，或换个宝贝)',
+                          tpl: '领取失败,需邀请${max_member}位好友进群,才可以领取福利',
                           visibleOn: 'this.total_num<=0',
                         },
                         {
@@ -241,6 +273,7 @@
                           actionType: 'url',
                           level: 'link',
                           blank: true,
+                          visibleOn: 'this.total_num>0',
                           url: '${click_url|raw}',
                         },
                       ],//dialog body body
@@ -256,7 +289,6 @@
           fetchSuccess: "加载完成",
           fetchFailed: "加载失败，请重试！",
         },  //service messages 消息提示覆写
-
 
       };
       let amisScoped = amis.embed('#root', amisJSON);
