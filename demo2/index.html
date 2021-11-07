@@ -175,6 +175,9 @@
           api: {
             method: 'get',
             url: "${domain|raw}/fuli/safe/item/${itemid}",
+            headers: {
+              "Authorization": "${ls:Authorizations}"
+            },
             adaptor: function (payload, response) {
               if (payload.status === 20003) {
                 payload.status = 0

@@ -143,6 +143,9 @@
           api: {
             method: 'get',
             url: "${domain|raw}/fuli/List",
+            headers: {
+              "Authorization": "${ls:Authorizations}"
+            },
           },
           perPageField: 'size',
           pageField: 'page',
