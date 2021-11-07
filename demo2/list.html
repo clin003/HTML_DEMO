@@ -66,21 +66,23 @@
             oauth_hash: '${oauth_hash}',
           },
           dataType: "json",
-          "trackExpression": "${oauth_hash}",
+          "trackExpression": "${oauth_hash}",         
           adaptor: function (payload, response) {
             if (payload.status === 0) {
               const bearer = `Bearer ${payload.data}`
               localStorage.setItem("Authorizations", bearer)
             } else {
-              const bearer = `Bearer ${payload.msg}`
-              localStorage.setItem("Err:loginErr", bearer)
-              // payload.status = 0
-              // payload.msg = ""
+              // const bearer = `Bearer ${payload.msg}`
+              // localStorage.setItem("Err:loginErr", bearer)
+              payload.status = 0
+              // payload.msg = "QQ授权失败"
+              payload.msg = ""
+              // payload.data.data=""
             }
             return {
               ...payload,
             };
-          }
+          },
         },  //initApi 
         // 顶部状态栏
         toolbar: {

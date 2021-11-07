@@ -182,6 +182,9 @@
               if (payload.status === 20003) {
                 payload.status = 0
                 payload.msg = ""
+              }else if (payload.status === 20001) {
+                payload.status = 0
+                payload.msg = "请登录"
               }
               return {
                 ...payload,
@@ -262,6 +265,9 @@
                             if (payload.status === 20001) {
                               // payload.status = 0
                               payload.msg = "领取失败，需要邀请好友进群,才可以领取福利"
+                            }else  if (payload.status === 20102) {
+                              // payload.status = 0 The user was not found.
+                              payload.msg = "失败了，请确认是否有邀请数据，或联系群管理员"
                             }
                             return {
                               ...payload,
