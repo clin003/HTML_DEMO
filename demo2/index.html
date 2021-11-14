@@ -182,7 +182,7 @@
               if (payload.status === 20003) {
                 payload.status = 0
                 payload.msg = ""
-              }else if (payload.status === 20001) {
+              } else if (payload.status === 20001) {
                 payload.status = 0
                 payload.msg = "请登录"
               }
@@ -265,7 +265,7 @@
                             if (payload.status === 20001) {
                               // payload.status = 0
                               payload.msg = "领取失败，需要邀请好友进群,才可以领取福利"
-                            }else  if (payload.status === 20102) {
+                            } else if (payload.status === 20102) {
                               // payload.status = 0 The user was not found.
                               payload.msg = "失败了，请确认是否有邀请数据，或联系群管理员"
                             }
@@ -318,6 +318,10 @@
                     // url: "http://127.0.0.1:8080/v1/inviter/ListMe",
                     headers: {
                       "Authorization": "${ls:Authorizations}"
+                    },
+                    data: {
+                      page: "$page",
+                      size: "$size",
                     },
                     adaptor: function (payload, response) {
                       if (payload.status === 20003 || payload.status === 20001) {
