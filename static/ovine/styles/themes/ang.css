@@ -457,10 +457,12 @@
   --Checkbox-size: 1rem;
   --Checkbox-inner-size: calc(var(--Checkbox-size) / 2);
   --Checkbox-onHover-color: var(--info);
-  --Checkbox-onDisabled-bg: #e5e7eb;
-  --Checkbox-onDisabled-color: var(--text--muted-color);
+  --Checkbox-onDisabled-bg: #f7f7f9;
+  --Checkbox-onDisabled-color: #b8babf;
   --Checkbox-inner-onDisabled-bg: #d4d6d9;
-  --Checkbox-disabled-unchecked-bg: #f2f3f3;
+  --Checkbox-inner-onDisabled-color: #ffffff;
+  --Checkbox-disabled-unchecked-bg: #f7f7f9;
+  --Checkbox-inner-disabled-checked-bg: #e8e9eb;
   --Checkbox-border-width: var(--Form-input-borderWidth);
   --Checkbox-paddingX: 0.75rem;
   --Checkbox-button-height: 2rem;
@@ -8581,6 +8583,16 @@ input[type=button].a-Button--block {
   user-select: none;
 }
 
+.a-CBPicker-trigger {
+  cursor: pointer;
+  transition: transform var(--animation-duration) ease-out;
+  display: flex;
+  color: var(--Form-select-caret-iconColor);
+}
+.a-CBPicker-trigger:hover {
+  color: var(--primary);
+}
+
 @keyframes contextMenuInSpecial {
   from {
     transform: scale3d(1, 1, 1);
@@ -9007,13 +9019,15 @@ input[type=button].a-Button--block {
   vertical-align: middle;
 }
 .a-Crud-toolbar-item {
-  margin-left: var(--Crud-toolbar-gap);
   margin-top: var(--Crud-toolbar-gap);
   line-height: var(--Crud-toolbar-lineHeight);
   height: var(--Crud-toolbar-height);
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
+}
+.a-Crud-toolbar-item:not(:first-child) {
+  margin-left: var(--Crud-toolbar-gap);
 }
 .a-Crud-toolbar-item--left {
   float: left;
@@ -9047,7 +9061,6 @@ input[type=button].a-Button--block {
 
 @media (min-width: 576px) {
   .a-Crud-toolbar {
-    margin-left: calc(var(--Crud-toolbar-gap) * -1);
     margin-top: calc(var(--Crud-toolbar-gap) * -1);
     flex-basis: 0;
     flex-grow: 1;
@@ -9060,10 +9073,133 @@ input[type=button].a-Button--block {
     clear: both;
   }
   .a-Crud-toolbar-item {
-    margin-left: var(--Crud-toolbar-gap);
     line-height: var(--Crud-toolbar-lineHeight);
     height: var(--Crud-toolbar-height);
     vertical-align: middle;
+  }
+  .a-Crud-toolbar-item:not(:first-child) {
+    margin-left: var(--Crud-toolbar-gap);
+  }
+  .a-Crud-toolbar-item--left {
+    float: left;
+  }
+  .a-Crud-toolbar-item--right {
+    float: right;
+  }
+  .a-Crud-actions > * + .a-Button,
+.a-Crud-actions > * + .a-Button--disabled-wrap {
+    margin-left: var(--Crud-toolbar-gap);
+  }
+}
+.a-Crud2 {
+  position: relative;
+}
+.a-Crud2-selection, .a-Crud2-toolbar, .a-Crud2-body {
+  margin-bottom: var(--gap-base);
+}
+.a-Crud2-selectionLabel {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: var(--gap-xs);
+}
+.a-Crud2-value {
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  line-height: calc(
+      var(--Form-input-lineHeight) * var(--Form-input-fontSize) - 0.125rem
+    );
+  display: inline-block;
+  font-size: var(--Form-selectValue-fontSize);
+  color: var(--Form-selectValue-color);
+  background: var(--Form-selectValue-bg);
+  border: 0.0625rem solid var(--Form-selectValue-borderColor);
+  border-radius: 2px;
+  margin-right: var(--gap-xs);
+  margin-top: var(--gap-xs);
+}
+.a-Crud2-value:hover {
+  background: var(--Form-selectValue-onHover-bg);
+}
+.a-Crud2-value.is-disabled {
+  pointer-events: none;
+  opacity: var(--Button-onDisabled-opacity);
+}
+.a-Crud2-valueIcon {
+  cursor: pointer;
+  border-right: 0.0625rem solid var(--Form-selectValue-borderColor);
+  padding: 1px 5px;
+}
+.a-Crud2-valueIcon:hover {
+  background: var(--Form-selectValue-onHover-bg);
+}
+.a-Crud2-valueLabel {
+  padding: 0 var(--gap-xs);
+}
+.a-Crud2-selectionClear {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  margin-left: var(--gap-xs);
+  margin-top: var(--gap-xs);
+  vertical-align: middle;
+}
+.a-Crud2-toolbar-item {
+  margin-top: var(--Crud-toolbar-gap);
+  line-height: var(--Crud-toolbar-lineHeight);
+  height: var(--Crud-toolbar-height);
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+}
+.a-Crud2-toolbar-item:not(:first-child) {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.a-Crud2-toolbar-item--left {
+  float: left;
+}
+.a-Crud2-toolbar-item--right {
+  float: right;
+}
+.a-Crud2-actions > * + .a-Button,
+.a-Crud2-actions > * + .a-ButtonGroup,
+.a-Crud2-actions > * + .a-ButtonToolbar {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.a-Crud2-statistics {
+  line-height: var(--Crud-toolbar-height);
+  vertical-align: middle;
+}
+.a-Crud2-pageSwitch .a-Select {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.a-Crud2-pager {
+  align-self: flex-start;
+}
+.a-Crud2-filter {
+  margin-bottom: var(--gap-base);
+}
+
+@media (min-width: 576px) {
+  .a-Crud-toolbar {
+    margin-top: calc(var(--Crud-toolbar-gap) * -1);
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+  .a-Crud-toolbar::before, .a-Crud-toolbar::after {
+    display: table;
+    content: "";
+  }
+  .a-Crud-toolbar::after {
+    clear: both;
+  }
+  .a-Crud-toolbar-item {
+    line-height: var(--Crud-toolbar-lineHeight);
+    height: var(--Crud-toolbar-height);
+    vertical-align: middle;
+  }
+  .a-Crud-toolbar-item:not(:first-child) {
+    margin-left: var(--Crud-toolbar-gap);
   }
   .a-Crud-toolbar-item--left {
     float: left;
@@ -11370,7 +11506,7 @@ input[type=button].a-Button--block {
 }
 .a-Table-v2.a-Table-resizable .a-Table-table > thead > tr > th .a-Table-thead-resizable {
   position: absolute;
-  width: 1px;
+  width: 3px;
   right: 0;
   top: 0;
   bottom: 0;
@@ -11417,8 +11553,6 @@ input[type=button].a-Button--block {
 }
 .a-Table-v2 .a-TableCell-searchBtn {
   cursor: pointer;
-  position: static;
-  transform: translateY(-50%);
   color: var(--text--muted-color);
   margin-left: var(--TableCell-icon-gap);
 }
@@ -13553,7 +13687,7 @@ input[type=button].a-Button--block {
   justify-content: flex-start;
 }
 .a-InputBox input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -13871,7 +14005,7 @@ input[type=button].a-Button--block {
   font-size: var(--Form-input-fontSize);
   flex-wrap: wrap;
   justify-content: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 0 0.3125rem;
   min-height: var(--Form-input-height);
   align-items: center;
@@ -13879,7 +14013,7 @@ input[type=button].a-Button--block {
   position: relative;
 }
 .a-ResultBox input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -13902,9 +14036,6 @@ input[type=button].a-Button--block {
 }
 .a-ResultBox--borderNone {
   border-color: transparent !important;
-}
-.a-ResultBox.is-clearable {
-  padding-right: 3.4375rem;
 }
 .a-ResultBox.is-error {
   border-color: var(--Form-input-onError-borderColor);
@@ -13943,7 +14074,26 @@ input[type=button].a-Button--block {
 .a-ResultBox.a-NestedSelect {
   padding-left: var(--gap-base);
 }
+.a-ResultBox-value-wrap {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.a-ResultBox-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.a-ResultBox-actions > *:first-child {
+  margin-left: 0.3125rem;
+}
+.a-ResultBox-actions > *:not(:last-child) {
+  margin-right: 0.3125rem;
+}
 .a-ResultBox-singleValue {
+  padding: 0 calc(var(--Form-input-paddingX) - 0.1875rem);
+  flex-grow: 1;
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
@@ -13977,10 +14127,7 @@ input[type=button].a-Button--block {
   margin-left: auto;
   text-decoration: none;
   height: 100%;
-  padding: 0.25rem;
   margin: auto 0;
-  position: absolute;
-  right: 10px;
   background-color: unset;
 }
 .a-ResultBox-clear svg {
@@ -14055,6 +14202,7 @@ input[type=button].a-Button--block {
 }
 .a-ResultBox-placeholder {
   color: var(--Form-input-placeholderColor);
+  flex-grow: 1;
   user-select: none;
 }
 .a-ResultBox > input {
@@ -15268,7 +15416,7 @@ fieldset.a-Collapse--lg:after {
   justify-content: flex-start;
 }
 .a-TextControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -15583,7 +15731,7 @@ input.a-TextControl-input-password {
   justify-content: flex-start;
 }
 .a-TextareaControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -15856,19 +16004,16 @@ input.a-TextControl-input-password {
   border-color: var(--Checkbox-gb);
 }
 .a-Checkbox--full.a-Checkbox--checkbox input[disabled] + i {
-  border-color: var(--Checkbox-onDisabled-color);
-  background: var(--FileControl-onDisabled-bg);
+  border-color: var(--Checkbox-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .a-Checkbox--full.a-Checkbox--checkbox input[disabled]:checked + i:before {
   border-color: var(--Checkbox-onDisabled-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .a-Checkbox--full.a-Checkbox--checkbox input:checked[disabled] + i {
-  border-color: var(--Checkbox-onDisabled-color);
-  background: var(--FileControl-onDisabled-bg);
-}
-.a-Checkbox--full.a-Checkbox--checkbox input:checked[disabled] + i:before {
-  background: var(--FileControl-onDisabled-bg);
-  border-color: var(--Checkbox-inner-onDisabled-bg);
+  border-color: var(--Checkbox-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .a-Checkbox--full.a-Checkbox--checkbox > i {
   position: relative;
@@ -15930,6 +16075,7 @@ input.a-TextControl-input-password {
 }
 .a-Checkbox--button.a-Checkbox--checkbox:hover:not(:disabled) {
   color: var(--Checkbox-onHover-color);
+  border-color: var(--Checkbox-onHover-color);
 }
 .a-Checkbox--button.a-Checkbox--checkbox:hover input:checked + i {
   background: transparent;
@@ -15955,7 +16101,7 @@ input.a-TextControl-input-password {
   left: 0;
   width: var(--Checkbox--full-inner-size);
   height: calc(var(--Checkbox--full-inner-size) / 2);
-  transform: translate(-80%, -160%) rotate(-50deg);
+  transform: translate(-80%, -160%) rotate(-50deg) scale(0.8);
   background: transparent;
 }
 .a-Checkbox--button.a-Checkbox--checkbox input[disabled] + i {
@@ -15967,8 +16113,12 @@ input.a-TextControl-input-password {
 }
 .a-Checkbox--button.a-Checkbox--checkbox input:checked[disabled] + i {
   background: transparent;
-  border-width: 0.5rem;
-  border-color: var(--Checkbox-onHover-color) transparent transparent var(--Checkbox-onHover-color);
+  border-width: 0.4375rem;
+  border-color: var(--Checkbox-inner-disabled-checked-bg) transparent transparent var(--Checkbox-inner-disabled-checked-bg);
+}
+.a-Checkbox--button.a-Checkbox--checkbox input:checked[disabled] + i:before {
+  background: transparent;
+  border-color: var(--Checkbox-inner-onDisabled-color) !important;
 }
 .a-Checkbox--button.a-Checkbox--checkbox > i {
   position: absolute;
@@ -15997,8 +16147,19 @@ input.a-TextControl-input-password {
   border-color: var(--Switch-checked-onHover-bgColor);
   color: var(--Switch-checked-onHover-bgColor);
 }
-.a-Checkbox--button--disabled--unchecked.a-Checkbox--checkbox.a-Checkbox--full i {
-  background: var(--FileControl-onDisabled-bg);
+.a-Checkbox--button--disabled--unchecked.a-Checkbox--checkbox {
+  background: var(--Checkbox-disabled-unchecked-bg);
+  border-color: var(--Checkbox-color);
+}
+.a-Checkbox--button--disabled--unchecked.a-Checkbox--checkbox:hover {
+  border-color: var(--Checkbox-color) !important;
+}
+.a-Checkbox--button--disabled--checked.a-Checkbox--checkbox {
+  background: var(--Checkbox-onDisabled-bg);
+  border-color: var(--Checkbox-color) !important;
+}
+.a-Checkbox--button--disabled--checked.a-Checkbox--checkbox:hover {
+  border-color: var(--Checkbox-color) !important;
 }
 .a-Checkbox--radio {
   padding-left: var(--Radio-size);
@@ -16851,6 +17012,9 @@ input.a-TextControl-input-password {
 }
 .a-Select:focus {
   box-shadow: var(--Form-select-onFocus-boxShadow);
+}
+.a-Select .a-PopOver.a-Select-popover .a-Select-menu {
+  overflow-x: hidden;
 }
 .a-Select .a-PopOver.a-Select-popover .a-Select-menu .a-Select-option {
   height: 2rem;
@@ -19636,7 +19800,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .a-TreeSelect-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -20140,7 +20304,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .a-Picker-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -20966,7 +21130,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .a-IconPickerControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -22776,9 +22940,8 @@ td.rdtQuarter.rdtDisabled:hover {
   height: var(--Form-input-height);
 }
 .a-FormulaPicker.is-input-group .a-FormulaPicker-input {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
   background: none;
   padding: 0;
   border: 0;

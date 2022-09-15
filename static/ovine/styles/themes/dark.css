@@ -457,10 +457,12 @@
   --Checkbox-size: 1rem;
   --Checkbox-inner-size: calc(var(--Checkbox-size) / 2);
   --Checkbox-onHover-color: var(--info);
-  --Checkbox-onDisabled-bg: #e5e7eb;
-  --Checkbox-onDisabled-color: var(--text--muted-color);
+  --Checkbox-onDisabled-bg: #f7f7f9;
+  --Checkbox-onDisabled-color: #b8babf;
   --Checkbox-inner-onDisabled-bg: #d4d6d9;
-  --Checkbox-disabled-unchecked-bg: #f2f3f3;
+  --Checkbox-inner-onDisabled-color: #ffffff;
+  --Checkbox-disabled-unchecked-bg: #f7f7f9;
+  --Checkbox-inner-disabled-checked-bg: #e8e9eb;
   --Checkbox-border-width: var(--Form-input-borderWidth);
   --Checkbox-paddingX: 0.75rem;
   --Checkbox-button-height: 2rem;
@@ -8684,6 +8686,16 @@ input[type=button].dark-Button--block {
   user-select: none;
 }
 
+.dark-CBPicker-trigger {
+  cursor: pointer;
+  transition: transform var(--animation-duration) ease-out;
+  display: flex;
+  color: var(--Form-select-caret-iconColor);
+}
+.dark-CBPicker-trigger:hover {
+  color: var(--primary);
+}
+
 @keyframes contextMenuInSpecial {
   from {
     transform: scale3d(1, 1, 1);
@@ -9110,13 +9122,15 @@ input[type=button].dark-Button--block {
   vertical-align: middle;
 }
 .dark-Crud-toolbar-item {
-  margin-left: var(--Crud-toolbar-gap);
   margin-top: var(--Crud-toolbar-gap);
   line-height: var(--Crud-toolbar-lineHeight);
   height: var(--Crud-toolbar-height);
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
+}
+.dark-Crud-toolbar-item:not(:first-child) {
+  margin-left: var(--Crud-toolbar-gap);
 }
 .dark-Crud-toolbar-item--left {
   float: left;
@@ -9150,7 +9164,6 @@ input[type=button].dark-Button--block {
 
 @media (min-width: 576px) {
   .dark-Crud-toolbar {
-    margin-left: calc(var(--Crud-toolbar-gap) * -1);
     margin-top: calc(var(--Crud-toolbar-gap) * -1);
     flex-basis: 0;
     flex-grow: 1;
@@ -9163,10 +9176,133 @@ input[type=button].dark-Button--block {
     clear: both;
   }
   .dark-Crud-toolbar-item {
-    margin-left: var(--Crud-toolbar-gap);
     line-height: var(--Crud-toolbar-lineHeight);
     height: var(--Crud-toolbar-height);
     vertical-align: middle;
+  }
+  .dark-Crud-toolbar-item:not(:first-child) {
+    margin-left: var(--Crud-toolbar-gap);
+  }
+  .dark-Crud-toolbar-item--left {
+    float: left;
+  }
+  .dark-Crud-toolbar-item--right {
+    float: right;
+  }
+  .dark-Crud-actions > * + .dark-Button,
+.dark-Crud-actions > * + .dark-Button--disabled-wrap {
+    margin-left: var(--Crud-toolbar-gap);
+  }
+}
+.dark-Crud2 {
+  position: relative;
+}
+.dark-Crud2-selection, .dark-Crud2-toolbar, .dark-Crud2-body {
+  margin-bottom: var(--gap-base);
+}
+.dark-Crud2-selectionLabel {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: var(--gap-xs);
+}
+.dark-Crud2-value {
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  line-height: calc(
+      var(--Form-input-lineHeight) * var(--Form-input-fontSize) - 0.125rem
+    );
+  display: inline-block;
+  font-size: var(--Form-selectValue-fontSize);
+  color: var(--Form-selectValue-color);
+  background: var(--Form-selectValue-bg);
+  border: 0.0625rem solid var(--Form-selectValue-borderColor);
+  border-radius: 2px;
+  margin-right: var(--gap-xs);
+  margin-top: var(--gap-xs);
+}
+.dark-Crud2-value:hover {
+  background: var(--Form-selectValue-onHover-bg);
+}
+.dark-Crud2-value.is-disabled {
+  pointer-events: none;
+  opacity: var(--Button-onDisabled-opacity);
+}
+.dark-Crud2-valueIcon {
+  cursor: pointer;
+  border-right: 0.0625rem solid var(--Form-selectValue-borderColor);
+  padding: 1px 5px;
+}
+.dark-Crud2-valueIcon:hover {
+  background: var(--Form-selectValue-onHover-bg);
+}
+.dark-Crud2-valueLabel {
+  padding: 0 var(--gap-xs);
+}
+.dark-Crud2-selectionClear {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  margin-left: var(--gap-xs);
+  margin-top: var(--gap-xs);
+  vertical-align: middle;
+}
+.dark-Crud2-toolbar-item {
+  margin-top: var(--Crud-toolbar-gap);
+  line-height: var(--Crud-toolbar-lineHeight);
+  height: var(--Crud-toolbar-height);
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+}
+.dark-Crud2-toolbar-item:not(:first-child) {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.dark-Crud2-toolbar-item--left {
+  float: left;
+}
+.dark-Crud2-toolbar-item--right {
+  float: right;
+}
+.dark-Crud2-actions > * + .dark-Button,
+.dark-Crud2-actions > * + .dark-ButtonGroup,
+.dark-Crud2-actions > * + .dark-ButtonToolbar {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.dark-Crud2-statistics {
+  line-height: var(--Crud-toolbar-height);
+  vertical-align: middle;
+}
+.dark-Crud2-pageSwitch .dark-Select {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.dark-Crud2-pager {
+  align-self: flex-start;
+}
+.dark-Crud2-filter {
+  margin-bottom: var(--gap-base);
+}
+
+@media (min-width: 576px) {
+  .dark-Crud-toolbar {
+    margin-top: calc(var(--Crud-toolbar-gap) * -1);
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+  .dark-Crud-toolbar::before, .dark-Crud-toolbar::after {
+    display: table;
+    content: "";
+  }
+  .dark-Crud-toolbar::after {
+    clear: both;
+  }
+  .dark-Crud-toolbar-item {
+    line-height: var(--Crud-toolbar-lineHeight);
+    height: var(--Crud-toolbar-height);
+    vertical-align: middle;
+  }
+  .dark-Crud-toolbar-item:not(:first-child) {
+    margin-left: var(--Crud-toolbar-gap);
   }
   .dark-Crud-toolbar-item--left {
     float: left;
@@ -11473,7 +11609,7 @@ input[type=button].dark-Button--block {
 }
 .dark-Table-v2.dark-Table-resizable .dark-Table-table > thead > tr > th .dark-Table-thead-resizable {
   position: absolute;
-  width: 1px;
+  width: 3px;
   right: 0;
   top: 0;
   bottom: 0;
@@ -11520,8 +11656,6 @@ input[type=button].dark-Button--block {
 }
 .dark-Table-v2 .dark-TableCell-searchBtn {
   cursor: pointer;
-  position: static;
-  transform: translateY(-50%);
   color: var(--text--muted-color);
   margin-left: var(--TableCell-icon-gap);
 }
@@ -13656,7 +13790,7 @@ input[type=button].dark-Button--block {
   justify-content: flex-start;
 }
 .dark-InputBox input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -13974,7 +14108,7 @@ input[type=button].dark-Button--block {
   font-size: var(--Form-input-fontSize);
   flex-wrap: wrap;
   justify-content: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 0 0.3125rem;
   min-height: var(--Form-input-height);
   align-items: center;
@@ -13982,7 +14116,7 @@ input[type=button].dark-Button--block {
   position: relative;
 }
 .dark-ResultBox input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -14005,9 +14139,6 @@ input[type=button].dark-Button--block {
 }
 .dark-ResultBox--borderNone {
   border-color: transparent !important;
-}
-.dark-ResultBox.is-clearable {
-  padding-right: 3.4375rem;
 }
 .dark-ResultBox.is-error {
   border-color: var(--Form-input-onError-borderColor);
@@ -14046,7 +14177,26 @@ input[type=button].dark-Button--block {
 .dark-ResultBox.dark-NestedSelect {
   padding-left: var(--gap-base);
 }
+.dark-ResultBox-value-wrap {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dark-ResultBox-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.dark-ResultBox-actions > *:first-child {
+  margin-left: 0.3125rem;
+}
+.dark-ResultBox-actions > *:not(:last-child) {
+  margin-right: 0.3125rem;
+}
 .dark-ResultBox-singleValue {
+  padding: 0 calc(var(--Form-input-paddingX) - 0.1875rem);
+  flex-grow: 1;
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
@@ -14080,10 +14230,7 @@ input[type=button].dark-Button--block {
   margin-left: auto;
   text-decoration: none;
   height: 100%;
-  padding: 0.25rem;
   margin: auto 0;
-  position: absolute;
-  right: 10px;
   background-color: unset;
 }
 .dark-ResultBox-clear svg {
@@ -14158,6 +14305,7 @@ input[type=button].dark-Button--block {
 }
 .dark-ResultBox-placeholder {
   color: var(--Form-input-placeholderColor);
+  flex-grow: 1;
   user-select: none;
 }
 .dark-ResultBox > input {
@@ -15371,7 +15519,7 @@ fieldset.dark-Collapse--lg:after {
   justify-content: flex-start;
 }
 .dark-TextControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -15686,7 +15834,7 @@ input.dark-TextControl-input-password {
   justify-content: flex-start;
 }
 .dark-TextareaControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -15959,19 +16107,16 @@ input.dark-TextControl-input-password {
   border-color: var(--Checkbox-gb);
 }
 .dark-Checkbox--full.dark-Checkbox--checkbox input[disabled] + i {
-  border-color: var(--Checkbox-onDisabled-color);
-  background: var(--FileControl-onDisabled-bg);
+  border-color: var(--Checkbox-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .dark-Checkbox--full.dark-Checkbox--checkbox input[disabled]:checked + i:before {
   border-color: var(--Checkbox-onDisabled-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .dark-Checkbox--full.dark-Checkbox--checkbox input:checked[disabled] + i {
-  border-color: var(--Checkbox-onDisabled-color);
-  background: var(--FileControl-onDisabled-bg);
-}
-.dark-Checkbox--full.dark-Checkbox--checkbox input:checked[disabled] + i:before {
-  background: var(--FileControl-onDisabled-bg);
-  border-color: var(--Checkbox-inner-onDisabled-bg);
+  border-color: var(--Checkbox-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .dark-Checkbox--full.dark-Checkbox--checkbox > i {
   position: relative;
@@ -16033,6 +16178,7 @@ input.dark-TextControl-input-password {
 }
 .dark-Checkbox--button.dark-Checkbox--checkbox:hover:not(:disabled) {
   color: var(--Checkbox-onHover-color);
+  border-color: var(--Checkbox-onHover-color);
 }
 .dark-Checkbox--button.dark-Checkbox--checkbox:hover input:checked + i {
   background: transparent;
@@ -16058,7 +16204,7 @@ input.dark-TextControl-input-password {
   left: 0;
   width: var(--Checkbox--full-inner-size);
   height: calc(var(--Checkbox--full-inner-size) / 2);
-  transform: translate(-80%, -160%) rotate(-50deg);
+  transform: translate(-80%, -160%) rotate(-50deg) scale(0.8);
   background: transparent;
 }
 .dark-Checkbox--button.dark-Checkbox--checkbox input[disabled] + i {
@@ -16070,8 +16216,12 @@ input.dark-TextControl-input-password {
 }
 .dark-Checkbox--button.dark-Checkbox--checkbox input:checked[disabled] + i {
   background: transparent;
-  border-width: 0.5rem;
-  border-color: var(--Checkbox-onHover-color) transparent transparent var(--Checkbox-onHover-color);
+  border-width: 0.4375rem;
+  border-color: var(--Checkbox-inner-disabled-checked-bg) transparent transparent var(--Checkbox-inner-disabled-checked-bg);
+}
+.dark-Checkbox--button.dark-Checkbox--checkbox input:checked[disabled] + i:before {
+  background: transparent;
+  border-color: var(--Checkbox-inner-onDisabled-color) !important;
 }
 .dark-Checkbox--button.dark-Checkbox--checkbox > i {
   position: absolute;
@@ -16100,8 +16250,19 @@ input.dark-TextControl-input-password {
   border-color: var(--Switch-checked-onHover-bgColor);
   color: var(--Switch-checked-onHover-bgColor);
 }
-.dark-Checkbox--button--disabled--unchecked.dark-Checkbox--checkbox.dark-Checkbox--full i {
-  background: var(--FileControl-onDisabled-bg);
+.dark-Checkbox--button--disabled--unchecked.dark-Checkbox--checkbox {
+  background: var(--Checkbox-disabled-unchecked-bg);
+  border-color: var(--Checkbox-color);
+}
+.dark-Checkbox--button--disabled--unchecked.dark-Checkbox--checkbox:hover {
+  border-color: var(--Checkbox-color) !important;
+}
+.dark-Checkbox--button--disabled--checked.dark-Checkbox--checkbox {
+  background: var(--Checkbox-onDisabled-bg);
+  border-color: var(--Checkbox-color) !important;
+}
+.dark-Checkbox--button--disabled--checked.dark-Checkbox--checkbox:hover {
+  border-color: var(--Checkbox-color) !important;
 }
 .dark-Checkbox--radio {
   padding-left: var(--Radio-size);
@@ -16954,6 +17115,9 @@ input.dark-TextControl-input-password {
 }
 .dark-Select:focus {
   box-shadow: var(--Form-select-onFocus-boxShadow);
+}
+.dark-Select .dark-PopOver.dark-Select-popover .dark-Select-menu {
+  overflow-x: hidden;
 }
 .dark-Select .dark-PopOver.dark-Select-popover .dark-Select-menu .dark-Select-option {
   height: 2rem;
@@ -19739,7 +19903,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .dark-TreeSelect-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -20243,7 +20407,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .dark-Picker-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -21069,7 +21233,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .dark-IconPickerControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -22879,9 +23043,8 @@ td.rdtQuarter.rdtDisabled:hover {
   height: var(--Form-input-height);
 }
 .dark-FormulaPicker.is-input-group .dark-FormulaPicker-input {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
   background: none;
   padding: 0;
   border: 0;

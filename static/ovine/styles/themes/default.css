@@ -457,10 +457,12 @@
   --Checkbox-size: 1rem;
   --Checkbox-inner-size: calc(var(--Checkbox-size) / 2);
   --Checkbox-onHover-color: var(--info);
-  --Checkbox-onDisabled-bg: #e5e7eb;
-  --Checkbox-onDisabled-color: var(--text--muted-color);
+  --Checkbox-onDisabled-bg: #f7f7f9;
+  --Checkbox-onDisabled-color: #b8babf;
   --Checkbox-inner-onDisabled-bg: #d4d6d9;
-  --Checkbox-disabled-unchecked-bg: #f2f3f3;
+  --Checkbox-inner-onDisabled-color: #ffffff;
+  --Checkbox-disabled-unchecked-bg: #f7f7f9;
+  --Checkbox-inner-disabled-checked-bg: #e8e9eb;
   --Checkbox-border-width: var(--Form-input-borderWidth);
   --Checkbox-paddingX: 0.75rem;
   --Checkbox-button-height: 2rem;
@@ -1688,8 +1690,8 @@
   --Number-handler--up-content: "";
   --Number-handler--up-transform: rotate(180deg);
   --Number-handler--down-content: "";
-  --Checkbox-onDisabled-color: #ebebeb;
-  --Checkbox-onDisabled-bg: #cccccc;
+  --Checkbox-onDisabled-bg: #F7F7F9;
+  --Checkbox-onDisabled-color: #B8BABF;
   --Checkbox-inner-size: 0.5rem;
   --Checkbox--full-inner-size: 0.5rem;
   --Checkbox--sm-size: 0.875rem;
@@ -9071,6 +9073,16 @@ input[type=button].cxd-Button--block {
   user-select: none;
 }
 
+.cxd-CBPicker-trigger {
+  cursor: pointer;
+  transition: transform var(--animation-duration) ease-out;
+  display: flex;
+  color: var(--Form-select-caret-iconColor);
+}
+.cxd-CBPicker-trigger:hover {
+  color: var(--primary);
+}
+
 @keyframes contextMenuInSpecial {
   from {
     transform: scale3d(1, 1, 1);
@@ -9497,13 +9509,15 @@ input[type=button].cxd-Button--block {
   vertical-align: middle;
 }
 .cxd-Crud-toolbar-item {
-  margin-left: var(--Crud-toolbar-gap);
   margin-top: var(--Crud-toolbar-gap);
   line-height: var(--Crud-toolbar-lineHeight);
   height: var(--Crud-toolbar-height);
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
+}
+.cxd-Crud-toolbar-item:not(:first-child) {
+  margin-left: var(--Crud-toolbar-gap);
 }
 .cxd-Crud-toolbar-item--left {
   float: left;
@@ -9537,7 +9551,6 @@ input[type=button].cxd-Button--block {
 
 @media (min-width: 576px) {
   .cxd-Crud-toolbar {
-    margin-left: calc(var(--Crud-toolbar-gap) * -1);
     margin-top: calc(var(--Crud-toolbar-gap) * -1);
     flex-basis: 0;
     flex-grow: 1;
@@ -9550,10 +9563,133 @@ input[type=button].cxd-Button--block {
     clear: both;
   }
   .cxd-Crud-toolbar-item {
-    margin-left: var(--Crud-toolbar-gap);
     line-height: var(--Crud-toolbar-lineHeight);
     height: var(--Crud-toolbar-height);
     vertical-align: middle;
+  }
+  .cxd-Crud-toolbar-item:not(:first-child) {
+    margin-left: var(--Crud-toolbar-gap);
+  }
+  .cxd-Crud-toolbar-item--left {
+    float: left;
+  }
+  .cxd-Crud-toolbar-item--right {
+    float: right;
+  }
+  .cxd-Crud-actions > * + .cxd-Button,
+.cxd-Crud-actions > * + .cxd-Button--disabled-wrap {
+    margin-left: var(--Crud-toolbar-gap);
+  }
+}
+.cxd-Crud2 {
+  position: relative;
+}
+.cxd-Crud2-selection, .cxd-Crud2-toolbar, .cxd-Crud2-body {
+  margin-bottom: var(--gap-base);
+}
+.cxd-Crud2-selectionLabel {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: var(--gap-xs);
+}
+.cxd-Crud2-value {
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  line-height: calc(
+      var(--Form-input-lineHeight) * var(--Form-input-fontSize) - 0.125rem
+    );
+  display: inline-block;
+  font-size: var(--Form-selectValue-fontSize);
+  color: var(--Form-selectValue-color);
+  background: var(--Form-selectValue-bg);
+  border: 0.0625rem solid var(--Form-selectValue-borderColor);
+  border-radius: 2px;
+  margin-right: var(--gap-xs);
+  margin-top: var(--gap-xs);
+}
+.cxd-Crud2-value:hover {
+  background: var(--Form-selectValue-onHover-bg);
+}
+.cxd-Crud2-value.is-disabled {
+  pointer-events: none;
+  opacity: var(--Button-onDisabled-opacity);
+}
+.cxd-Crud2-valueIcon {
+  cursor: pointer;
+  border-right: 0.0625rem solid var(--Form-selectValue-borderColor);
+  padding: 1px 5px;
+}
+.cxd-Crud2-valueIcon:hover {
+  background: var(--Form-selectValue-onHover-bg);
+}
+.cxd-Crud2-valueLabel {
+  padding: 0 var(--gap-xs);
+}
+.cxd-Crud2-selectionClear {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  margin-left: var(--gap-xs);
+  margin-top: var(--gap-xs);
+  vertical-align: middle;
+}
+.cxd-Crud2-toolbar-item {
+  margin-top: var(--Crud-toolbar-gap);
+  line-height: var(--Crud-toolbar-lineHeight);
+  height: var(--Crud-toolbar-height);
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+}
+.cxd-Crud2-toolbar-item:not(:first-child) {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.cxd-Crud2-toolbar-item--left {
+  float: left;
+}
+.cxd-Crud2-toolbar-item--right {
+  float: right;
+}
+.cxd-Crud2-actions > * + .cxd-Button,
+.cxd-Crud2-actions > * + .cxd-ButtonGroup,
+.cxd-Crud2-actions > * + .cxd-ButtonToolbar {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.cxd-Crud2-statistics {
+  line-height: var(--Crud-toolbar-height);
+  vertical-align: middle;
+}
+.cxd-Crud2-pageSwitch .cxd-Select {
+  margin-left: var(--Crud-toolbar-gap);
+}
+.cxd-Crud2-pager {
+  align-self: flex-start;
+}
+.cxd-Crud2-filter {
+  margin-bottom: var(--gap-base);
+}
+
+@media (min-width: 576px) {
+  .cxd-Crud-toolbar {
+    margin-top: calc(var(--Crud-toolbar-gap) * -1);
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+  .cxd-Crud-toolbar::before, .cxd-Crud-toolbar::after {
+    display: table;
+    content: "";
+  }
+  .cxd-Crud-toolbar::after {
+    clear: both;
+  }
+  .cxd-Crud-toolbar-item {
+    line-height: var(--Crud-toolbar-lineHeight);
+    height: var(--Crud-toolbar-height);
+    vertical-align: middle;
+  }
+  .cxd-Crud-toolbar-item:not(:first-child) {
+    margin-left: var(--Crud-toolbar-gap);
   }
   .cxd-Crud-toolbar-item--left {
     float: left;
@@ -11860,7 +11996,7 @@ input[type=button].cxd-Button--block {
 }
 .cxd-Table-v2.cxd-Table-resizable .cxd-Table-table > thead > tr > th .cxd-Table-thead-resizable {
   position: absolute;
-  width: 1px;
+  width: 3px;
   right: 0;
   top: 0;
   bottom: 0;
@@ -11907,8 +12043,6 @@ input[type=button].cxd-Button--block {
 }
 .cxd-Table-v2 .cxd-TableCell-searchBtn {
   cursor: pointer;
-  position: static;
-  transform: translateY(-50%);
   color: var(--text--muted-color);
   margin-left: var(--TableCell-icon-gap);
 }
@@ -14043,7 +14177,7 @@ input[type=button].cxd-Button--block {
   justify-content: flex-start;
 }
 .cxd-InputBox input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -14361,7 +14495,7 @@ input[type=button].cxd-Button--block {
   font-size: var(--Form-input-fontSize);
   flex-wrap: wrap;
   justify-content: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 0 0.3125rem;
   min-height: var(--Form-input-height);
   align-items: center;
@@ -14369,7 +14503,7 @@ input[type=button].cxd-Button--block {
   position: relative;
 }
 .cxd-ResultBox input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -14392,9 +14526,6 @@ input[type=button].cxd-Button--block {
 }
 .cxd-ResultBox--borderNone {
   border-color: transparent !important;
-}
-.cxd-ResultBox.is-clearable {
-  padding-right: 3.4375rem;
 }
 .cxd-ResultBox.is-error {
   border-color: var(--Form-input-onError-borderColor);
@@ -14433,7 +14564,26 @@ input[type=button].cxd-Button--block {
 .cxd-ResultBox.cxd-NestedSelect {
   padding-left: var(--gap-base);
 }
+.cxd-ResultBox-value-wrap {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cxd-ResultBox-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.cxd-ResultBox-actions > *:first-child {
+  margin-left: 0.3125rem;
+}
+.cxd-ResultBox-actions > *:not(:last-child) {
+  margin-right: 0.3125rem;
+}
 .cxd-ResultBox-singleValue {
+  padding: 0 calc(var(--Form-input-paddingX) - 0.1875rem);
+  flex-grow: 1;
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
@@ -14467,10 +14617,7 @@ input[type=button].cxd-Button--block {
   margin-left: auto;
   text-decoration: none;
   height: 100%;
-  padding: 0.25rem;
   margin: auto 0;
-  position: absolute;
-  right: 10px;
   background-color: unset;
 }
 .cxd-ResultBox-clear svg {
@@ -14545,6 +14692,7 @@ input[type=button].cxd-Button--block {
 }
 .cxd-ResultBox-placeholder {
   color: var(--Form-input-placeholderColor);
+  flex-grow: 1;
   user-select: none;
 }
 .cxd-ResultBox > input {
@@ -15758,7 +15906,7 @@ fieldset.cxd-Collapse--lg:after {
   justify-content: flex-start;
 }
 .cxd-TextControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -16073,7 +16221,7 @@ input.cxd-TextControl-input-password {
   justify-content: flex-start;
 }
 .cxd-TextareaControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -16346,19 +16494,16 @@ input.cxd-TextControl-input-password {
   border-color: var(--Checkbox-gb);
 }
 .cxd-Checkbox--full.cxd-Checkbox--checkbox input[disabled] + i {
-  border-color: var(--Checkbox-onDisabled-color);
-  background: var(--FileControl-onDisabled-bg);
+  border-color: var(--Checkbox-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .cxd-Checkbox--full.cxd-Checkbox--checkbox input[disabled]:checked + i:before {
   border-color: var(--Checkbox-onDisabled-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .cxd-Checkbox--full.cxd-Checkbox--checkbox input:checked[disabled] + i {
-  border-color: var(--Checkbox-onDisabled-color);
-  background: var(--FileControl-onDisabled-bg);
-}
-.cxd-Checkbox--full.cxd-Checkbox--checkbox input:checked[disabled] + i:before {
-  background: var(--FileControl-onDisabled-bg);
-  border-color: var(--Checkbox-inner-onDisabled-bg);
+  border-color: var(--Checkbox-color);
+  background: var(--Checkbox-onDisabled-bg);
 }
 .cxd-Checkbox--full.cxd-Checkbox--checkbox > i {
   position: relative;
@@ -16420,6 +16565,7 @@ input.cxd-TextControl-input-password {
 }
 .cxd-Checkbox--button.cxd-Checkbox--checkbox:hover:not(:disabled) {
   color: var(--Checkbox-onHover-color);
+  border-color: var(--Checkbox-onHover-color);
 }
 .cxd-Checkbox--button.cxd-Checkbox--checkbox:hover input:checked + i {
   background: transparent;
@@ -16445,7 +16591,7 @@ input.cxd-TextControl-input-password {
   left: 0;
   width: var(--Checkbox--full-inner-size);
   height: calc(var(--Checkbox--full-inner-size) / 2);
-  transform: translate(-80%, -160%) rotate(-50deg);
+  transform: translate(-80%, -160%) rotate(-50deg) scale(0.8);
   background: transparent;
 }
 .cxd-Checkbox--button.cxd-Checkbox--checkbox input[disabled] + i {
@@ -16457,8 +16603,12 @@ input.cxd-TextControl-input-password {
 }
 .cxd-Checkbox--button.cxd-Checkbox--checkbox input:checked[disabled] + i {
   background: transparent;
-  border-width: 0.5rem;
-  border-color: var(--Checkbox-onHover-color) transparent transparent var(--Checkbox-onHover-color);
+  border-width: 0.4375rem;
+  border-color: var(--Checkbox-inner-disabled-checked-bg) transparent transparent var(--Checkbox-inner-disabled-checked-bg);
+}
+.cxd-Checkbox--button.cxd-Checkbox--checkbox input:checked[disabled] + i:before {
+  background: transparent;
+  border-color: var(--Checkbox-inner-onDisabled-color) !important;
 }
 .cxd-Checkbox--button.cxd-Checkbox--checkbox > i {
   position: absolute;
@@ -16487,8 +16637,19 @@ input.cxd-TextControl-input-password {
   border-color: var(--Switch-checked-onHover-bgColor);
   color: var(--Switch-checked-onHover-bgColor);
 }
-.cxd-Checkbox--button--disabled--unchecked.cxd-Checkbox--checkbox.cxd-Checkbox--full i {
-  background: var(--FileControl-onDisabled-bg);
+.cxd-Checkbox--button--disabled--unchecked.cxd-Checkbox--checkbox {
+  background: var(--Checkbox-disabled-unchecked-bg);
+  border-color: var(--Checkbox-color);
+}
+.cxd-Checkbox--button--disabled--unchecked.cxd-Checkbox--checkbox:hover {
+  border-color: var(--Checkbox-color) !important;
+}
+.cxd-Checkbox--button--disabled--checked.cxd-Checkbox--checkbox {
+  background: var(--Checkbox-onDisabled-bg);
+  border-color: var(--Checkbox-color) !important;
+}
+.cxd-Checkbox--button--disabled--checked.cxd-Checkbox--checkbox:hover {
+  border-color: var(--Checkbox-color) !important;
 }
 .cxd-Checkbox--radio {
   padding-left: var(--Radio-size);
@@ -17341,6 +17502,9 @@ input.cxd-TextControl-input-password {
 }
 .cxd-Select:focus {
   box-shadow: var(--Form-select-onFocus-boxShadow);
+}
+.cxd-Select .cxd-PopOver.cxd-Select-popover .cxd-Select-menu {
+  overflow-x: hidden;
 }
 .cxd-Select .cxd-PopOver.cxd-Select-popover .cxd-Select-menu .cxd-Select-option {
   height: 2rem;
@@ -20126,7 +20290,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .cxd-TreeSelect-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -20630,7 +20794,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .cxd-Picker-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -21456,7 +21620,7 @@ td.rdtQuarter.rdtDisabled:hover {
   justify-content: flex-start;
 }
 .cxd-IconPickerControl-input input {
-  flex-basis: 5rem;
+  flex-basis: 1.875rem;
   flex-grow: 1;
   outline: none;
   background: transparent;
@@ -23266,9 +23430,8 @@ td.rdtQuarter.rdtDisabled:hover {
   height: var(--Form-input-height);
 }
 .cxd-FormulaPicker.is-input-group .cxd-FormulaPicker-input {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
   background: none;
   padding: 0;
   border: 0;
